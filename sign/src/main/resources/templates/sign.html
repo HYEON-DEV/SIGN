@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="generate_key" type="submit"> 키 생성 </button>
+
+    <br/><br/>
+
+    <form id="form_privatekey" enctype="multipart/form-data">
+        <div> 개인 키 </div>
+        <input type="file" id="input_privatekey" name="input_privatekey" /> <br/>
+        <button type="submit" id="generate_sign"> 서명 생성 </button>
+    </form>
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.13.1/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.13.1/sweetalert2.all.min.js"></script>
+    <script th:src="@{/assets/js/AxiosHelper.js}"></script>
+    <script th:src="@{/assets/js/UtilHelper.js}"></script>   
+
+    <script>
+
+        // ECDSA 키 생성 POST 요청
+        document.querySelector('#generate_key').addEventListener('click', async e => {
+            e.preventDefault();
+
+            let data = null;
+            try {
+                data = await axiosHelper.post('[[@{/api/generate_key}]]', {});
+            } catch (error) {
+                console.error(error);
+            }
+            alert('키 생성 완료');
+        });
+
+
+        // 서명 생성 POST 요청
+        document.querySelector('#form_privatekey').addEventListener('submit', async e => {
+            e.preventDefault();
+
+            const file = document.querySelector('#input_privatekey');
+
+            const formData = new FormData();
+            formData.append("input_privatekey", file.files[0]);
+
+            let data = null;
+            try {
+                data = await axiosHelper.postMultipart('[[@{/api/generate_sign}]]', formData);
+            } catch(error) {
+                console.error(error);
+            }
+            alert('서명 생성 완료');
+        });
+    </script>
+</body>
+</html>
