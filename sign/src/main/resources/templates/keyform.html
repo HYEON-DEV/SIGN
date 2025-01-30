@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/assets/css/global.css}"> <!-- 공통 CSS 불러오기 -->
+    <link rel="stylesheet" th:href="@{/assets/css/keyform.css}">
+    <base href="/" />
+    <title>키 생성하기</title>
+</head>
+
+<body>
+    <div class="app-container"> <!-- 모바일 컨테이너 -->
+
+        <th:block th:replace="~{/fragments/header}" /> <!-- 헤더 불러오기 -->
+
+        <div class="body-container"> <!-- 본문 컨테이너 -->
+            <button id="generate_key" type="submit"> 키 생성하기 </button>
+            <button id="verify_key" type="button"> 검증하기 </button>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.13.1/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.13.1/sweetalert2.all.min.js"></script>
+    <script th:src="@{/assets/js/AxiosHelper.js}"></script>
+    <script th:src="@{/assets/js/UtilHelper.js}"></script>
+
+    <script>
+
+        // ECDSA 키 생성 POST 요청
+        document.querySelector('#generate_key').addEventListener('click', async e => {
+            e.preventDefault();
+
+            let data = null;
+            try {
+                data = await axiosHelper.post('[[@{/api/generate_key}]]', {});
+            } catch (error) {
+                console.error(error);
+            }
+            alert('키 생성 완료');
+        });
+
+        // 검증하기 버튼 클릭 시 verification.html로 이동
+        document.querySelector('#verify_key').addEventListener('click', () => {
+            window.location.href = '[[@{/verification}]]';
+        });
+
+    </script>
+</body>
+
+</html>

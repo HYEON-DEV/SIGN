@@ -22,4 +22,8 @@ public class TestController {
         return "verification";
     }
     
+    @GetMapping("/keyform")
+    public String keyform() {
+        return "keyform";
+    }   
 }
