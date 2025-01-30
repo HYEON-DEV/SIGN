@@ -231,6 +231,7 @@ fabric.properties
 *.log
 log*
 log/
+!login*
 
 # BlueJ files
 *.ctxt

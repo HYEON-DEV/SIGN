@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" th:href="@{/assets/css/global.css}"> <!-- 공통 CSS 불러오기 -->
+    <link rel="stylesheet" th:href="@{/assets/css/login.css}">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.13.1/dist/sweetalert2.min.css" /> -->
+</head>
+
+<body>
+    <main>
+        <div class="app-container"> <!-- 모바일 컨테이너 -->
+
+            <th:block th:replace="~{/fragments/header}" /> <!-- 헤더 불러오기 -->
+
+            <div class="login">
+                <div class="contents">
+                    <div class="loginCover">
+                        <div class="title">로그인</div>
+                        <!-- 입력값 넣는 아이디입력 / 비밀번호입력 -->
+                        <form class="login-form">
+                            <ul class="inputList">
+                                <li class="userInput">
+                                    <input class="userId" name="userId" id="userId" type="text"
+                                        placeholder="아이디 입력 (이메일)" />
+                                </li>
+                                <li class="userInput">
+                                    <input class="userPw" name="userPw" id="userPw" type="password"
+                                        placeholder="비밀번호 입력" />
+                                    <div class="pwShowHide">
+                                        <img id="pwShowHide" th:src="@{/assets/img/login/password.png}">
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div class="otherCover">
+                                <ul class="findAndSignIn">
+                                    <li class="clickable signIn">
+                                        <a th:href="@{/#}">회원가입 하기</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- 로그인 버튼 구현 -->
+                            <div class="buttonCover">
+                                <button type="submit" class="button buttonLogin">로그인</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.13.1/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.13.1/sweetalert2.all.min.js"></script>
+    <script th:src="@{/assets/js/AxiosHelper.js}"></script>
+    <script th:src="@{/assets/js/UtilHelper.js}"></script>
+    <script th:src="@{/assets/js/login.js}"></script>
+    <!-- <script>
+        // 로그인 폼 제출 이벤트 리스너 추가
+        document.querySelector(".login-form").addEventListener("submit", async (e) => {
+            // 폼의 기본 제출 동작을 막음
+            e.preventDefault();
+
+            try {
+                // 아이디 입력값 유효성 검사
+                regexHelper.value("#userId", "아이디를 입력하세요.");
+                regexHelper.email("#userId", "이메일 형식이 올바르지 않습니다.");
+
+                // 비밀번호 입력값 유효성 검사
+                regexHelper.value("#userPw", "비밀번호를 입력하세요.");
+                regexHelper.minLength("#userPw", 7, "비밀번호는 영문, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다.");
+                regexHelper.pw("#userPw", "비밀번호는 영문, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다.");
+
+                // 유효성 검사 중 예외 발생 시 처리
+            } catch (err) {
+                // 에러 메시지를 경고로 표시
+                await utilHelper.alertDanger(err.message);
+
+                // 에러가 발생한 요소에 포커스를 맞춤
+                setTimeout(() => err.element.focus(), 300);
+                return false;
+            }
+
+            // 폼 데이터를 서버로 전송
+            const data = await axiosHelper.post("[[@{/api/member/login}]]", new FormData(e.currentTarget));
+
+            // 응답 데이터가 있으면 메인 페이지로 리디렉션
+            if (data) {
+                window.location = "[[@{/main/main}]]";
+            }
+        });
+    </script> -->
+
+</body>
+
+</html>

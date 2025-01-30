@@ -16,6 +16,11 @@ public class TestController {
     public String sign() {
         return "sign";
     }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
     
     @GetMapping("/verification")
     public String verification() {
