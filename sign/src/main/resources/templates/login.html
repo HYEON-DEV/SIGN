@@ -36,18 +36,16 @@
                                 </li>
                             </ul>
 
-                            <div class="otherCover">
-                                <ul class="findAndSignIn">
-                                    <li class="clickable signIn">
-                                        <a th:href="@{/#}">회원가입 하기</a>
-                                    </li>
-                                </ul>
-                            </div>
                             <!-- 로그인 버튼 구현 -->
                             <div class="buttonCover">
                                 <button type="submit" class="button buttonLogin">로그인</button>
                             </div>
                         </form>
+
+                        <!-- 회원가입 페이지로 이동 -->
+                        <div class="signRedirect">
+                            회원이 아니신가요? <a th:href="@{signup}">회원가입 하기</a>
+                        </div>
                     </div>
                 </div>
             </div>

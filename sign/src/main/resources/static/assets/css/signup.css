@@ -1,13 +1,11 @@
 /* 앱 컨테이너 */
 .body-container {
-  padding: 20px;
-  margin-top: 175px;
   align-items: center;
   /* gap: 15px; */
 }
 
-/* 로그인 박스 */
-.loginCover {
+/* 회원가입 박스 */
+.signupCover {
   width: 100%;
   height: 100vh;
   padding: 20px;
@@ -16,21 +14,12 @@
   text-align: center;
 }
 
-/* 로그인 타이틀 */
+/* 회원가입 타이틀 */
 .title {
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 15px;
   padding-top: 100px;
-}
-
-/* 입력 폼 */
-.login-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
 }
 
 /* 입력 리스트 */
@@ -79,36 +68,11 @@
   opacity: 1;
 }
 
-/* 회원가입 링크 */
-.findAndSignIn {
-  list-style: none;
-  padding: 0;
-  text-align: center;
-}
-
-.signIn a {
-  cursor: pointer;
-  text-decoration: none;
-  color: #007bff;
-  font-size: 14px;
-}
-
-/* .signIn a:hover {
-  text-decoration: underline;
-} */
-
-/* 로그인 버튼 */
-.buttonCover {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.buttonLogin {
+/* 회원가입 버튼 */
+.buttonSignup {
   width: 100%;
   padding: 12px;
-  background-color: #3572ef;
+  background-color: #3572ef; /* 초록색 */
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -118,17 +82,21 @@
   transition: 0.3s;
 }
 
-.buttonLogin:hover {
+.buttonSignup:hover {
   background-color: #0056b3;
 }
 
 /* 로그인 페이지로 이동 */
-.signRedirect {
+.loginRedirect {
   margin-top: 10px;
   font-size: 14px;
 }
 
-.signRedirect a {
+.loginRedirect a {
   text-decoration: none;
   color: #007bff;
 }
+
+/* .loginRedirect a:hover {
+  text-decoration: underline;
+} */

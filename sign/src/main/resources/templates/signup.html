@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link rel="stylesheet" th:href="@{/assets/css/global.css}"> <!-- 공통 CSS 불러오기 -->
+    <link rel="stylesheet" th:href="@{/assets/css/signup.css}">
+</head>
+
+<body>
+    <main>
+        <div class="app-container"> <!-- 모바일 컨테이너 -->
+
+            <th:block th:replace="~{/fragments/header}" /> <!-- 헤더 불러오기 -->
+
+            <div id="header-container"></div> <!-- 헤더 불러오기 -->
+            <div class="body-container">
+                <div class="contents">
+                    <div class="signupCover">
+                        <div class="title">회원가입</div>
+
+                        <!-- 회원가입 입력 폼 -->
+                        <form class="signup-form">
+                            <ul class="inputList">
+                                <li class="userInput">
+                                    <input class="userName" name="userName" id="userName" type="text"
+                                        placeholder="사용자 이름" required />
+                                </li>
+                                <li class="userInput">
+                                    <input class="userId" name="userId" id="userId" type="email" placeholder="아이디 (이메일)"
+                                        required />
+                                </li>
+                                <li class="userInput">
+                                    <input class="userPw" name="userPw" id="userPw" type="password" placeholder="비밀번호"
+                                        required />
+                                    <div class="pwShowHide">
+                                        <img id="pwShowHide" th:src="@{/assets/img/login/password.png}">
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <!-- 회원가입 버튼 -->
+                            <div class="buttonCover">
+                                <button type="submit" class="button buttonSignup">회원가입</button>
+                            </div>
+                        </form>
+
+                        <!-- 로그인 페이지로 이동 -->
+                        <div class="loginRedirect">
+                            이미 계정이 있으신가요? <a th:href="@{/login}">로그인 하기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script th:src="@{/assets/js/login.js}"></script>
+</body>
+
+</html>
