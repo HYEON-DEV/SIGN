@@ -1,7 +1,6 @@
-*.mod
 *.exe
 tmp/
-
+.air.toml
 
 node_modules/
 .vscode/
@@ -230,6 +229,8 @@ fabric.properties
 
 # Log file
 *.log
+log*
+log/
 
 # BlueJ files
 *.ctxt

@@ -1,4 +1,8 @@
-package db
+/*
+ * 모델
+ */
+
+package structs
 
 import "database/sql"
 

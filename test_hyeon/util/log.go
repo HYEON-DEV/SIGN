@@ -32,7 +32,8 @@ func Errlog(s, c, r string, e interface{}) {
 
 // 현재 실행 중인 프로그램의 디렉토리 반환
 func GetCurrentDirectory() string {
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	// dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	dir, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -135,5 +136,6 @@ func LogSetup() {
 	log.SetFlags(log.Ldate | log.Lshortfile | log.Ltime)
 
 	// 로그 출력 설정
+	// io.MultiWriter: 로그 출력을 파일과 터미널에 동시에 출력하도록 설정
 	log.SetOutput(io.MultiWriter(&myWriter{} /*os.Stderr,*/, os.Stdout))
 }

@@ -1,11 +1,11 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
 	"test_hyeon/config"
 	"test_hyeon/db"
+	"test_hyeon/handler"
+	"test_hyeon/server"
 	"test_hyeon/util"
 )
 
@@ -14,37 +14,34 @@ func main() {
 	util.Enterlog("main")
 	defer util.Leavelog("main")
 
-	// Load configuration
-	_, err := config.LoadConfig()
+	// 설정 로드
+	config, err := config.LoadConfig()
 	if err != nil {
-		log.Fatalf("Error loading configuration: %v", err)
+		log.Fatalf("Failed to load config: %v", err)
 	}
 
-	// Initialize database
-	dao, err := db.NewMySQLDAO(config.GConfig.MySQLDSN())
+	// DB 연결 초기화
+	// 데이터베이스 연결 문자열(DSN)을 설정에서 가져오기기
+	dsn := config.MySQLDSN()
+	// 데이터베이스 연결 초기화, 객체 생성성
+	mysqlDAO, err := db.NewMySQLDAO(dsn)
 	if err != nil {
-		util.Errlog("main", "DB_ERR", "Error initializing database", err)
-		log.Fatalf("Error initializing database: %v", err)
+		log.Fatalf("[ERROR] Failed to connect MySQL: %v", err)
 	}
-	defer dao.Close()
+	defer func() { // 프로그램 종료 시 DB를 닫도록 설정
+		if mysqlDAO != nil {
+			if err := mysqlDAO.Close(); err != nil {
+				log.Printf("[WARN] Failed to close mySQL connection: %v", err)
+			}
+		}
+	}()
+	log.Println("DB 연결")
 
-	// Test: Get all members
-	members, err := dao.GetAllMembers()
-	if err != nil {
-		util.Errlog("main", "DB_ERR", "Error getting all members", err)
-		log.Fatalf("Error getting all members: %v", err)
-	}
+	// 핸들러 초기화
+	// 서비스 레이어를 초기화, DB 접근 객체(mysqlDAO)를 핸들러에 전달
+	handler.InitHandler(mysqlDAO)
 
-	// Print all members
-	for _, member := range members {
-		fmt.Printf("ID: %d, Name: %s, UserID: %s, UserPW: %s, RegDate: %s, PrivateKey: %s, PublicKey: %s, VC: %s, Facility: %s\n",
-			member.MemberID, member.Name, member.UserID, member.UserPW, member.RegDate, nullStringToString(member.PrivateKey), nullStringToString(member.PublicKey), nullStringToString(member.VC), nullStringToString(member.Facility))
-	}
-}
+	// 서버 시작
+	server.StartServer()
 
-func nullStringToString(ns sql.NullString) string {
-	if ns.Valid {
-		return ns.String
-	}
-	return "NULL"
 }
