@@ -17,5 +17,9 @@ public class TestController {
         return "sign";
     }
     
+    @GetMapping("/verification")
+    public String verification() {
+        return "verification";
+    }
     
 }

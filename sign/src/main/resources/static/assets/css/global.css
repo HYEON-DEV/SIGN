@@ -1,0 +1,44 @@
+/* 색상표 */
+/* 
+.color1 {color: #0083ff;}
+.color2 {color: #00b2ff;}
+.color3 {color: #00e6ff;}
+.color4 {color: #a0ffff;}
+.color5 {color: #f5ffff;} 
+*/
+
+/* 초기화 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --app-width: 375px;
+  --app-height: 667px;
+  --app-bg-color: rgb(255, 255, 255);
+  --app-border-radius: 20px;
+}
+
+/* 모바일 스타일 컨테이너 */
+.app-container {
+  width: var(--app-width);
+  height: var(--app-height);
+  background-color: var(--app-bg-color);
+  border-radius: var(--app-border-radius);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+/* 화면 정가운데 배치 */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
