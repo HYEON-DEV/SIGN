@@ -229,7 +229,6 @@ fabric.properties
 
 # Log file
 *.log
-log*
 log/
 !login*
 
