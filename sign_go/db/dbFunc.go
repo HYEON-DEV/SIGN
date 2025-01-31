@@ -10,8 +10,8 @@ package db
 import (
 	"fmt"
 	"log"
-	"test_hyeon/structs"
-	"test_hyeon/util"
+	"sign_go/structs"
+	"sign_go/util"
 )
 
 // MySQLDAO 구조체 - 데이터베이스 연결 관리

@@ -8,7 +8,7 @@
 package service
 
 import (
-	"test_hyeon/structs"
+	"sign_go/structs"
 )
 
 /*

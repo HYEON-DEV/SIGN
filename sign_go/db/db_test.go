@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"testing"
 
-	"test_hyeon/structs"
+	"sign_go/structs"
 
 	"github.com/DATA-DOG/go-sqlmock"
 )

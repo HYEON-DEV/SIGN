@@ -12,8 +12,8 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"test_hyeon/service"
-	"test_hyeon/structs"
+	"sign_go/service"
+	"sign_go/structs"
 )
 
 // ECDSA 개인키를 저장할 변수

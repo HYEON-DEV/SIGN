@@ -1,4 +1,4 @@
-module test_hyeon
+module sign_go
 
 go 1.23.4
 

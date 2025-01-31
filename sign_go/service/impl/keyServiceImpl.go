@@ -1,9 +1,9 @@
 package impl
 
 import (
-	"test_hyeon/db"
-	"test_hyeon/service"
-	"test_hyeon/structs"
+	"sign_go/db"
+	"sign_go/service"
+	"sign_go/structs"
 )
 
 // KeyService 인터페이스 구현

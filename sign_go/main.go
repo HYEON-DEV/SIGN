@@ -2,11 +2,11 @@ package main
 
 import (
 	"log"
-	"test_hyeon/config"
-	"test_hyeon/db"
-	"test_hyeon/handler"
-	"test_hyeon/server"
-	"test_hyeon/util"
+	"sign_go/config"
+	"sign_go/db"
+	"sign_go/handler"
+	"sign_go/server"
+	"sign_go/util"
 )
 
 func main() {
