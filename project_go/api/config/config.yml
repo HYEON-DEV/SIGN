@@ -1,5 +1,0 @@
-mysql:
-  url: "서버 IP 주소 또는 localhost:3306"
-  database: "데이터베이스 이름"    # 데이터베이스 이름
-  user: "사용자 이름"                # 사용자 이름
-  password: "비밀번호"        # 비밀번호

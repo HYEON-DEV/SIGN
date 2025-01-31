@@ -1,3 +1,0 @@
-package structs
-
-// DB에서 사용하는 구조체 목록 정의...

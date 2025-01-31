@@ -1,3 +1,0 @@
-package db
-
-// DB 세팅 함수 - DB 연동 및 DB 객체 생성...
