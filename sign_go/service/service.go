@@ -16,4 +16,5 @@ KeyService 인터페이스 - 비즈니스 로직 정의
 */
 type KeyService interface {
 	SaveKeys(member structs.Member) error
+	CheckKeys(memberID int) (bool, error)
 }

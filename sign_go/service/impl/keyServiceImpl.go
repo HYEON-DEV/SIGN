@@ -20,3 +20,8 @@ func NewKeyServiceImpl(dao *db.MySQLDAO) service.KeyService {
 func (s *KeyServiceImpl) SaveKeys(member structs.Member) error {
 	return s.dao.SaveKeys(member)
 }
+
+// 키 존재 유무 확인
+func (s *KeyServiceImpl) CheckKeys(memberID int) (bool, error) {
+	return s.dao.CheckKeys(memberID)
+}

@@ -1,7 +1,7 @@
 package db
 
 import (
-	"database/sql"
+	"encoding/json"
 	"testing"
 
 	"sign_go/structs"
@@ -26,8 +26,8 @@ func TestSaveKeys(t *testing.T) {
 	// 테스트할 member 데이터 생성
 	member := structs.Member{
 		MemberID:   1,
-		PrivateKey: sql.NullString{String: `{"d":381574558907}`, Valid: true},
-		PublicKey:  sql.NullString{String: `{"x":381574558907}`, Valid: true},
+		PrivateKey: json.RawMessage(`{"d":381574558907}`),
+		PublicKey:  json.RawMessage(`{"x":381574558907}`),
 	}
 
 	// 예상되는 쿼리와 결과 설정

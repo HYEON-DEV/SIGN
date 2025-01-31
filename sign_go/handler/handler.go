@@ -4,7 +4,6 @@ import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
-	"database/sql"
 	"encoding/json"
 	"io"
 	"log"
@@ -14,6 +13,7 @@ import (
 	"runtime"
 	"sign_go/service"
 	"sign_go/structs"
+	"sign_go/util"
 )
 
 // ECDSA 개인키를 저장할 변수
@@ -32,12 +32,39 @@ func InitHandler(svc service.KeyService) {
  *HTTP 요청을 처리하고, ECDSA 키를 생성하여 JSON 형식으로 변환한 후, DB에 저장
  */
 func GenerateKeyHandler(w http.ResponseWriter, r *http.Request) {
+	util.Enterlog("GenerateKeyHandler")
+	defer util.Leavelog("GenerateKeyHandler")
+
+	// 요청에서 memberId 가져온다 가정
+	// memberID := r.URL.Query().Get("member_id")
+	// if memberID == "" {
+	// 	http.Error(w, "member_id is required", http.StatusBadRequest)
+	// 	log.Println("회원정보 에러")
+	//     return
+	// }
+
+	// 임시 멤버 아이디 ✅
+	id := 2
+
+	// 키 존재 유무 확인
+	checkKeys, err := keyService.CheckKeys(id) // ✅ 로그인 구현시 수정
+	if err != nil {
+		util.ServerError(w, "키 유무 확인 중 에러")
+		return
+	}
+
+	if checkKeys {
+		util.SendJSONOk(w, map[string]interface{}{"message": "키가 이미 존재합니다."})
+		return
+	}
+
+	// 키가 없을 시 키 생성 로직 수행
 
 	// ECDSA 키 생성
-	var err error
 	privateKey, err = ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	if err != nil {
 		log.Printf("ECDSA 개인키 생성 실패: %v\n", err)
+		util.ServerError(w, "ECDSA 개인키 생성 실패")
 		return
 	}
 	log.Println("ECDSA 키 생성")
@@ -62,12 +89,14 @@ func GenerateKeyHandler(w http.ResponseWriter, r *http.Request) {
 	privateKeyData, err := json.Marshal(jsonPrivateKey)
 	if err != nil {
 		log.Printf("개인키 JSON 직렬화 실패: %v", err)
+		util.ServerError(w, "개인키 JSON 직렬화 실패")
 		return
 	}
 
 	publicKeyData, err := json.Marshal(jsonPublicKey)
 	if err != nil {
 		log.Printf("공개키 JSON 직렬화 실패: %v", err)
+		util.ServerError(w, "공개키 JSON 직렬화 실패")
 		return
 	}
 
@@ -77,14 +106,15 @@ func GenerateKeyHandler(w http.ResponseWriter, r *http.Request) {
 
 	// DB에 키 저장
 	member := structs.Member{
-		MemberID:   1, // ✅ 추후 실제 로그인 정보로 변경
-		PrivateKey: sql.NullString{String: string(privateKeyData), Valid: true},
-		PublicKey:  sql.NullString{String: string(publicKeyData), Valid: true},
+		MemberID:   id, // ✅ 추후 실제 로그인 정보로 변경
+		PrivateKey: json.RawMessage(privateKeyData),
+		PublicKey:  json.RawMessage(publicKeyData),
 	}
 
 	err = keyService.SaveKeys(member)
 	if err != nil {
 		log.Printf("DB에 키 저장 실패: %v\n", err)
+		util.ServerError(w, "DB에 키 저장 실패")
 		return
 	}
 
@@ -114,14 +144,11 @@ func GenerateKeyHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Println("공개키 파일 생성 - 성공")
 
-	// 응답으로 성공 메시지 반환
-	response := map[string]string{
-		"message":        "키 생성이 완료되었습니다.",
+	// JSON 응답
+	util.SendJSONResponse(w, http.StatusOK, "키 생성 완료", map[string]interface{}{
 		"privateKeyFile": privateKeyFile,
 		"publicKeyFile":  publicKeyFile,
-	}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	})
 }
 
 /*

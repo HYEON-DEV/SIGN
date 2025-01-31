@@ -8,6 +8,7 @@
 package db
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"sign_go/structs"
@@ -20,8 +21,8 @@ import (
 // }
 
 /*
-개인키, 공개키 저장
-*/
+ * 개인키, 공개키 저장
+ */
 func (dao *MySQLDAO) SaveKeys(member structs.Member) error {
 	util.Enterlog("SaveKeys")
 	defer util.Leavelog("SaveKeys")
@@ -48,6 +49,36 @@ func (dao *MySQLDAO) SaveKeys(member structs.Member) error {
 	log.Println("update count: ", row)
 
 	return nil
+}
+
+/*
+ * 키 유무 확인
+ */
+func (dao *MySQLDAO) CheckKeys(memberID int) (bool, error) {
+	util.Enterlog("CheckKeys")
+	defer util.Leavelog("CheckKeys")
+
+	query := `
+		SELECT COUNT(*)
+		FROM member
+		WHERE member_id = ? AND
+			private_key IS NOT NULL AND 
+			public_key IS NOT NULL`
+
+	var count int
+
+	err := dao.db.QueryRow(query, memberID).Scan(&count)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return false, nil
+		}
+		log.Printf("DB 조회 실패: %v\n", err)
+		return false, err
+	}
+
+	result := count > 0
+
+	return result, nil
 }
 
 // member_id로 member 조회

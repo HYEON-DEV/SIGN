@@ -14,6 +14,9 @@ type Config struct {
 		User     string `yaml:"user"`     // 사용자 이름
 		Password string `yaml:"password"` // 비밀번호
 	} `yaml:"mysql"`
+	Server struct {
+		Port int `yaml:"port"`
+	} `yaml:"server"`
 }
 
 // 전역 변수 설정 - 사용 시, main에서 설정 로드만 해두면 GConfig로 언제든지 불러올 수 있음

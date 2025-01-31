@@ -1,8 +1,10 @@
 package server
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"sign_go/config"
 	"sign_go/handler"
 
 	"github.com/gorilla/mux"
@@ -10,6 +12,12 @@ import (
 
 // 라우터 설정, 서버 시작
 func StartServer() {
+
+	// 설정 파일 로드
+	_, err := config.LoadConfig()
+	if err != nil {
+		log.Fatalf("설장 파일 로드 에러: %v", err)
+	}
 
 	// 라우터 설정
 	router := mux.NewRouter()
@@ -19,6 +27,7 @@ func StartServer() {
 	router.HandleFunc("/api/generate_sign", handler.GenerateSignHandler).Methods("POST")
 
 	// 서버 시작
-	log.Println("Starting server on :8081")
-	http.ListenAndServe(":8081", router)
+	port := config.GConfig.Server.Port
+	log.Printf("Starting server on : %d\n", port)
+	http.ListenAndServe(fmt.Sprintf(":%d", port), router)
 }
