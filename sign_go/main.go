@@ -38,8 +38,10 @@ func main() {
 	log.Println("DB 연결")
 
 	// 핸들러 초기화
+
 	// 서비스 레이어를 초기화, DB 접근 객체(mysqlDAO)를 핸들러에 전달
-	handler.InitHandler(mysqlDAO)
+	handler.InitKeyHandler(mysqlDAO)
+	handler.InitMemberHandler(mysqlDAO)
 
 	// 서버 시작
 	server.StartServer()

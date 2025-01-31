@@ -23,17 +23,23 @@ func (dao *MySQLDAO) MemberLogin(user_id string, user_pw string) (*structs.Membe
 	util.Enterlog("MemberLogin")
 	defer util.Leavelog("MemberLogin")
 
+	// query := `
+	// 	SELECT member_id, name, user_id, user_pw, reg_date,
+	// 			private_key, public_key, vc, facility
+	// 	FROM member
+	// WHERE user_id = ? AND user_pw = ?`
+
 	query := `
-		SELECT member_id, name, user_id, user_pw, reg_date, 
-				private_key, public_key, vc, facility 
-		FROM member
-		WHERE user_id = ? AND user_pw = ?`
+	SELECT member_id, name, user_id, user_pw 
+	FROM member
+	WHERE user_id = ? AND user_pw = ?`
 
 	log.Println("[SELECT] id,pw로 로그인")
 	row := dao.db.QueryRow(query, user_id, user_pw)
 
 	var member structs.Member
-	err := row.Scan(&member.MemberID, &member.Name, &member.UserID, &member.UserPW, &member.RegDate, &member.PrivateKey, &member.PublicKey, &member.VC, &member.Facility)
+	// err := row.Scan(&member.MemberID, &member.Name, &member.UserID, &member.UserPW, &member.RegDate, &member.PrivateKey, &member.PublicKey, &member.VC, &member.Facility)
+	err := row.Scan(&member.MemberID, &member.Name, &member.UserID, &member.UserPW)
 
 	if err != nil {
 		return nil, fmt.Errorf("로그인 실패: %v", err)

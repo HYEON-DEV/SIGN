@@ -24,7 +24,7 @@ var privateKey *ecdsa.PrivateKey
 var keyService service.KeyService
 
 // 서비스 레이어 초기화, 서비스 구현체를 핸들러에 전달
-func InitHandler(svc service.KeyService) {
+func InitKeyHandler(svc service.KeyService) {
 	keyService = svc
 }
 
