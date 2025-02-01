@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"sign_go/service"
+	"sign_go/util"
 )
 
 // 서비스 레이어를 초기화하는 변수
@@ -29,7 +30,7 @@ func MemberLoginHandler(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&loginRequest)
 	if err != nil {
 		log.Println("요청 바디 디코딩 실패:", err)
-		http.Error(w, "잘못된 요청 형식", http.StatusBadRequest)
+		util.BadRequest(w, "잘못된 요청 형식")
 		return
 	}
 	log.Println("요청 바디 디코딩 성공")
@@ -39,19 +40,13 @@ func MemberLoginHandler(w http.ResponseWriter, r *http.Request) {
 	member, err := MemberService.MemberLogin(loginRequest.UserID, loginRequest.UserPW)
 	if err != nil {
 		log.Println("로그인 실패:", err)
-		http.Error(w, "로그인 실패: "+err.Error(), http.StatusUnauthorized)
+		util.SendError(w, http.StatusUnauthorized, "로그인 실패: "+err.Error())
 		return
 	}
 	log.Println("로그인 성공")
 
 	// 응답으로 멤버 정보 반환
 	log.Println("응답으로 멤버 정보 반환 시작")
-	w.Header().Set("Content-Type", "application/json")
-	err = json.NewEncoder(w).Encode(member)
-	if err != nil {
-		log.Println("응답으로 멤버 정보 반환 실패:", err)
-		http.Error(w, "응답 생성 실패", http.StatusInternalServerError)
-		return
-	}
+	util.SendJSONOk(w, map[string]interface{}{"member": member})
 	log.Println("응답으로 멤버 정보 반환 성공")
 }
