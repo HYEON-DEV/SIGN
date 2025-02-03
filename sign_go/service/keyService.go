@@ -12,9 +12,17 @@ import (
 )
 
 /*
-KeyService 인터페이스 - 비즈니스 로직 정의
-*/
+ * KeyService 인터페이스 - 비즈니스 로직 정의
+ */
 type KeyService interface {
+	// 생성한 키 DB에 저장하는 함수
 	SaveKeys(member structs.Member) error
+	// 키 존재 여부 확인하는 함수
 	CheckKeys(memberID int) (bool, error)
 }
+
+/*
+ * interface
+ *
+ * 메서드의 집합을 정의하는 타입
+ */

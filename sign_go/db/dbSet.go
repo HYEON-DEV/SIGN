@@ -11,7 +11,8 @@ import (
 
 // MySQLDAO 구조체 - 연동한 mysql DB 관리를 위한 구조체
 type MySQLDAO struct {
-	db *sql.DB // database/sql 패키지의 DB 타입을 포함하는 필드로, 실제 데이터베이스 연결을 나타낸다.
+	db *sql.DB
+	// database/sql 패키지의 DB 타입을 포함하는 필드로, 실제 데이터베이스 연결을 나타낸다.
 }
 
 /*

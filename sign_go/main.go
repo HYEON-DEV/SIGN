@@ -23,7 +23,7 @@ func main() {
 	// DB 연결 초기화
 	// 데이터베이스 연결 문자열(DSN)을 설정에서 가져오기기
 	dsn := config.MySQLDSN()
-	// 데이터베이스 연결 초기화, 객체 생성성
+	// 데이터베이스 연결 초기화, 객체 생성
 	mysqlDAO, err := db.NewMySQLDAO(dsn)
 	if err != nil {
 		log.Fatalf("[ERROR] Failed to connect MySQL: %v", err)
@@ -37,10 +37,14 @@ func main() {
 	}()
 	log.Println("DB 연결")
 
+	// 서비스 레이어 초기화
+	// keyService := impl.NewKeyServiceImpl(mysqlDAO)
+
 	// 핸들러 초기화
 
 	// 서비스 레이어를 초기화, DB 접근 객체(mysqlDAO)를 핸들러에 전달
 	handler.InitKeyHandler(mysqlDAO)
+	// handler.InitKeyHandler(keyService)
 	handler.InitMemberHandler(mysqlDAO)
 
 	// 서버 시작

@@ -20,16 +20,19 @@ import (
 var privateKey *ecdsa.PrivateKey
 
 // 서비스 레이어를 초기화하는 변수
-// var keyService *service.KeyService
 var keyService service.KeyService
 
-// 서비스 레이어 초기화, 서비스 구현체를 핸들러에 전달
+// 서비스 레이어 초기화
+// 서비스 구현체를 핸들러에 전달
 func InitKeyHandler(svc service.KeyService) {
 	keyService = svc
+	// => keyService := impl.NewKeyServiceImpl(mysqlDAO)
+	//   keyServiceImpl 구조체의 인스턴스를 생성하고, keyService 변수에 할당한다.
+	//   keyService 변수는 keyServiceImpl 구조체의 인스턴스를 참조한다.
 }
 
 /*
- *HTTP 요청을 처리하고, ECDSA 키를 생성하여 JSON 형식으로 변환한 후, DB에 저장
+ * HTTP 요청을 처리하고, ECDSA 키를 생성하여 JSON 형식으로 변환한 후, DB에 저장
  */
 func GenerateKeyHandler(w http.ResponseWriter, r *http.Request) {
 	util.Enterlog("GenerateKeyHandler")
@@ -44,7 +47,7 @@ func GenerateKeyHandler(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	// 임시 멤버 아이디 ✅
-	id := 2
+	id := 3
 
 	// 키 존재 유무 확인
 	checkKeys, err := keyService.CheckKeys(id) // ✅ 로그인 구현시 수정
@@ -54,7 +57,7 @@ func GenerateKeyHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if checkKeys {
-		util.SendJSONOk(w, map[string]interface{}{"message": "키가 이미 존재합니다."})
+		util.SendJSONResponse(w, http.StatusOK, "키가 이미 존재합니다.")
 		return
 	}
 
