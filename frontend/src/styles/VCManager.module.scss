@@ -1,0 +1,23 @@
+// VCManager 스타일
+
+@import 'variables';
+
+.container {
+    margin: 20px;
+    padding: 20px;
+}
+
+.vcList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.vcItem {
+    padding: 10px;
+    border: 1px solid $accent-color;
+    margin-bottom: 5px;
+    cursor: pointer;
+    &:hover {
+        background-color: lighten($primary-color, 40%);
+    }
+}

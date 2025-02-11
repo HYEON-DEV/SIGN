@@ -1,0 +1,10 @@
+// 전체 스타일
+
+@import 'variables';
+
+body {
+    font-family: $font-family;
+    margin: 0;
+    padding: 0;
+    background-color: $background-color;
+}

@@ -1,0 +1,21 @@
+// DIDManager 스타일
+
+@import 'variables';
+@import 'mixins';
+
+.container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid $accent-color;
+    border-radius: 5px;
+    background-color: $background-color;
+}
+
+.button {
+    @include button-style($primary-color);
+}
+
+.didDisplay {
+    margin-top: 10px;
+    font-weight: bold;
+}

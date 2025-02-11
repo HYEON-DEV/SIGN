@@ -1,0 +1,22 @@
+// VPManager 스타일
+
+@import 'variables';
+@import 'mixins';
+
+.container {
+    margin: 20px;
+    padding: 20px;
+}
+
+.button {
+    @include button-style($secondary-color);
+    &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+}
+
+.vpDisplay {
+    margin-top: 10px;
+    font-weight: bold;
+}

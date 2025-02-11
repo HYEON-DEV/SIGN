@@ -1,0 +1,13 @@
+// 반복적인 스타일 함수화
+
+@mixin button-style($bg-color) {
+    background-color: $bg-color;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+        background-color: darken($bg-color, 10%);
+    }
+}
